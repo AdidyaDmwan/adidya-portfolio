@@ -38,7 +38,7 @@ const projectsData = [
     image: hidayahImg,
     liveUrl: null,
     apiUrl: null,
-    githubUrl: null,
+    githubUrl: 'https://github.com/AdidyaDmwan/Hidayah-Game',
   },
 ]
 
