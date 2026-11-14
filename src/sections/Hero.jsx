@@ -127,8 +127,8 @@ const Hero = () => {
             View Projects
           </a>
           <a
-            href="/cv.pdf"
-            download
+            href="/ADIDYA%20DARMAWAN_CV.pdf"
+            download="ADIDYA DARMAWAN_CV.pdf"
             className="px-7 py-3 bg-white hover:bg-primary-light text-primary font-semibold rounded-lg border-2 border-primary transition-all duration-200 flex items-center gap-2 hover:-translate-y-0.5 transform"
           >
             Download CV
