@@ -8,6 +8,7 @@ const projectsData = [
     id: 1,
     title: 'MeetMind',
     category: 'web',
+    categoryLabel: 'WEB',
     description:
       'An AI-powered full stack meeting notes summarizer. Upload audio or text files and instantly get summaries, action items, and key decisions powered by Groq LLaMA AI.',
     tech: ['Next.js 14', 'FastAPI', 'PostgreSQL', 'Docker', 'Groq AI', 'TailwindCSS'],
@@ -18,8 +19,23 @@ const projectsData = [
   },
   {
     id: 2,
+    title: 'Document Extraction Pipeline',
+    category: 'ai',
+    categoryLabel: 'AI AUTOMATION',
+    inDevelopment: true,
+    description:
+      'An intelligent end-to-end data extraction pipeline that converts invoices and document scans into structured data using Gemini API & Pydantic. Features automated business logic validation, human-in-the-loop review queues for edge cases, and test dataset accuracy evaluations.',
+    tech: ['Python', 'Gemini API', 'Pydantic', 'SQLite', 'Streamlit'],
+    image: null,
+    liveUrl: null,
+    apiUrl: null,
+    githubUrl: 'https://github.com/AdidyaDmwan/doc-extraction',
+  },
+  {
+    id: 3,
     title: 'Expense Tracker AI',
     category: 'mobile',
+    categoryLabel: 'MOBILE',
     description:
       'A full-featured mobile expense tracker and budget planner built with Flutter. Includes AI financial advisor powered by Groq LLaMA that analyzes your real spending data and gives personalized insights in Bahasa Indonesia.',
     tech: ['Flutter', 'Supabase', 'Riverpod', 'Groq AI', 'PostgreSQL'],
@@ -29,9 +45,10 @@ const projectsData = [
     githubUrl: 'https://github.com/AdidyaDmwan/expense-tracker',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Hidayah',
     category: 'java',
+    categoryLabel: 'JAVA',
     description:
       'A desktop game built using Java and Object-Oriented Programming principles. Features engineered game logic and an interactive UI for a seamless user experience.',
     tech: ['Java', 'OOP Principles'],
@@ -47,16 +64,33 @@ const categoryStyles = {
     badge: 'bg-primary-light text-primary',
     title: 'text-primary',
     tech: 'bg-primary-light text-primary',
+    bg: 'bg-primary-light/50',
+    iconColor: 'text-primary',
+    icon: '🌐',
+  },
+  ai: {
+    badge: 'bg-emerald-50 text-emerald-600',
+    title: 'text-emerald-600',
+    tech: 'bg-emerald-50 text-emerald-600',
+    bg: 'bg-emerald-50/70',
+    iconColor: 'text-emerald-500',
+    icon: '🤖',
   },
   mobile: {
     badge: 'bg-purple-50 text-purple-600',
     title: 'text-purple-600',
     tech: 'bg-purple-50 text-purple-600',
+    bg: 'bg-purple-50',
+    iconColor: 'text-purple-400',
+    icon: '📱',
   },
   java: {
     badge: 'bg-orange-50 text-orange-500',
     title: 'text-heading',
     tech: 'bg-orange-50 text-orange-500',
+    bg: 'bg-orange-50',
+    iconColor: 'text-orange-400',
+    icon: '☕',
   },
 }
 
@@ -99,30 +133,38 @@ const Projects = () => {
                   />
                 ) : (
                   <div className={`w-full h-full flex flex-col items-center justify-center gap-3 ${
-                    project.category === 'mobile' ? 'bg-purple-50' : 'bg-orange-50'
+                    categoryStyles[project.category]?.bg || 'bg-surface-alt'
                   }`}>
-                    <div className={`text-4xl font-bold opacity-20 ${
-                      project.category === 'mobile' ? 'text-purple-400' : 'text-orange-400'
+                    <div className={`text-4xl font-bold opacity-30 ${
+                      categoryStyles[project.category]?.iconColor || 'text-muted'
                     }`}>
-                      {project.category === 'mobile' ? '📱' : '☕'}
+                      {categoryStyles[project.category]?.icon || '💻'}
                     </div>
-                    <span className="text-xs text-placeholder">Screenshot coming soon</span>
+                    <span className="text-xs text-placeholder font-medium">Screenshot coming soon</span>
                   </div>
                 )}
 
                 {/* Category badge */}
                 <div className="absolute top-3 left-3">
                   <span className={`text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm bg-white/80 ${categoryStyles[project.category].badge}`}>
-                    {project.category.toUpperCase()}
+                    {project.categoryLabel || project.category.toUpperCase()}
                   </span>
                 </div>
 
-                {/* Live badge */}
+                {/* Status badges: Live or In Development */}
                 {project.liveUrl && (
                   <div className="absolute top-3 right-3">
                     <span className="text-xs font-bold px-3 py-1 rounded-full bg-green-50/90 text-green-600 backdrop-blur-sm flex items-center gap-1">
                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse inline-block"></span>
                       Live
+                    </span>
+                  </div>
+                )}
+                {project.inDevelopment && (
+                  <div className="absolute top-3 right-3">
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-amber-50/95 text-amber-700 backdrop-blur-sm border border-amber-200/80 flex items-center gap-1.5 shadow-xs">
+                      <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse inline-block"></span>
+                      In Development
                     </span>
                   </div>
                 )}
@@ -188,18 +230,18 @@ const Projects = () => {
             </motion.div>
           ))}
 
-          {/* More coming soon */}
+          {/* More coming soon banner */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
             viewport={{ once: true }}
-            className="bg-surface-alt border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center py-20 gap-3"
+            className="col-span-1 md:col-span-2 bg-surface-alt border-2 border-dashed border-border rounded-2xl flex flex-col items-center justify-center py-10 gap-2"
           >
-            <div className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center">
-              <span className="text-placeholder text-2xl font-light">+</span>
+            <div className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-placeholder text-xl font-light">
+              +
             </div>
-            <p className="text-sm text-placeholder">More coming soon</p>
+            <p className="text-xs font-medium text-placeholder uppercase tracking-wider">More projects coming soon</p>
           </motion.div>
 
         </div>
